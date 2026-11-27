@@ -1,0 +1,12 @@
+/* Stays detail + in-app directions */
+.stbar{display:flex;gap:6px;overflow-x:auto;padding:2px 0 6px;scrollbar-width:none}.stbar button{flex:none;min-height:36px;padding:4px 12px;border-radius:99px;font-size:14px}
+.stc{display:grid;grid-template-columns:64px minmax(0,1fr);gap:12px;cursor:pointer}.stc .av{width:64px;height:64px;border-radius:14px;display:grid;place-items:center;color:#fff;font:800 26px "Baloo Bhai 2",sans-serif}
+.stc h3{font-size:17px;margin:0}.stc .pr{font-weight:700;color:var(--sea);margin-top:2px}.amen{font-size:12px;color:var(--mute);margin-top:2px}
+.fac{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}.fac span{background:var(--soft);border-radius:10px;padding:6px 10px;font-size:14px}.fac span.no{opacity:.45}
+#stMap{height:190px;border-radius:14px;margin:10px 0;z-index:0}.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px}.kv b{color:var(--mute);font-weight:500}
+.nav-next{display:flex;gap:12px;align-items:center;background:var(--sea);color:#fff;border-radius:16px;padding:12px 14px;font-weight:600;min-height:56px}
+.nav-next b{font-size:30px;line-height:1}.nav-next small{display:block;font-weight:400;opacity:.9}
+#nvMap{height:46vh;min-height:260px;border-radius:16px;border:1px solid var(--line);margin:10px 0;z-index:0}
+.steps{list-style:none;padding:0;margin:8px 0}.steps li{display:grid;grid-template-columns:32px 1fr auto;gap:8px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line)}
+.steps li b{font-size:22px;color:var(--sea);text-align:center}.steps li small{color:var(--mute)}.steps li.now{background:var(--soft);border-radius:10px}
+.mepin{width:18px;height:18px;border-radius:50%;background:#1a73e8;border:3px solid #fff;box-shadow:0 0 0 2px #1a73e855}
