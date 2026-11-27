@@ -1,0 +1,66 @@
+/* Professional polish: sign-up page, photo cards, profile, creator map */
+body{-webkit-font-smoothing:antialiased}
+h2{font-size:20px;margin:22px 0 10px;letter-spacing:-.01em}
+.card{box-shadow:0 1px 2px #2b1d140d,0 4px 14px #2b1d140a;border-radius:18px}
+.tag{background:var(--soft);color:var(--ink);font-weight:500}
+.tag.gem{background:var(--sea);color:#fff}
+nav{box-shadow:0 -4px 18px #2b1d1412}
+nav button[aria-current=page] svg{background:var(--soft);border-radius:12px;padding:2px 10px;width:44px;box-sizing:content-box}
+main{padding:14px 14px 24px}
+
+/* sign-up page */
+.auth{position:fixed;inset:0;z-index:4000;background:var(--bg);display:none;overflow:auto}
+.auth.on{display:block}
+.au-card{max-width:440px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+.au-brand{background:var(--red);color:#fff;padding:calc(48px + env(safe-area-inset-top)) 24px 70px;position:relative;text-align:center}
+.au-brand::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:40px;background:var(--bg);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V18C70 6 140 8 200 16C260 24 330 10 390 14V26Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V18C70 6 140 8 200 16C260 24 330 10 390 14V26Z'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.au-brand h1{font-size:36px}.au-brand p{margin:4px 0 0;opacity:.95}
+#auBody{padding:8px 24px 32px}
+#auBody h2{font-size:24px;margin:0 0 4px}
+.au-wait{text-align:center;color:var(--mute);padding:40px}
+.au-g{width:100%;min-height:52px;margin-top:18px;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;gap:12px;font-size:16px}
+.au-g svg{width:22px;height:22px}
+.au-or{display:flex;align-items:center;gap:10px;color:var(--mute);font-size:13px;margin:18px 0 4px}
+.au-or::before,.au-or::after{content:"";flex:1;height:1px;background:var(--line)}
+.au-go{width:100%;min-height:52px;margin-top:16px;border-radius:14px;font-size:17px}
+.au-link{background:none;color:var(--red);padding:6px 4px;min-height:44px;font-weight:600}
+.au-sw{text-align:center;color:var(--mute);margin:8px 0 0}
+#auForgot{display:block;margin:4px auto 0}#auForgot[hidden],#auSkip[hidden]{display:none}
+#auSkip{display:block;margin:6px auto}
+
+/* place cards with photos */
+.pc{display:grid;grid-template-columns:88px minmax(0,1fr) auto;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:8px;margin:10px 0;cursor:pointer;box-shadow:0 4px 14px #2b1d140a}
+.pc h3{font-size:18px}.pc .meta{font-size:13px}
+.pc-img{display:grid;place-items:center;width:88px;height:88px;border-radius:14px;background:linear-gradient(135deg,var(--red),var(--dune)) center/cover;color:#fff}
+.pc-img b{font:800 30px "Baloo Bhai 2",sans-serif}
+.pc-img.has b,.hero.has b{display:none}
+.hero{height:190px;border-radius:18px;background:linear-gradient(135deg,var(--red),var(--dune)) center/cover;display:grid;place-items:center;color:#fff}
+.hero b{font:800 60px "Baloo Bhai 2",sans-serif}
+.photo-credit{font-size:11px;margin:4px 0 0}
+.gems{padding-bottom:8px}
+.gem-card{flex:0 0 160px;flex-direction:column;align-items:flex-start;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px;gap:2px;color:var(--ink);scroll-snap-align:start}
+.gem-card .pc-img{width:100%;height:100px;margin-bottom:6px}
+.gem-card>b{font:800 15px/1.2 "Baloo Bhai 2",sans-serif}
+.gem-card .meta{font-size:12px;font-weight:400}
+
+/* profile */
+.me-head{display:flex;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-top:-36px;position:relative;z-index:2;box-shadow:0 6px 20px #2b1d1418}
+.me-head img,.me-head span{width:60px;height:60px;border-radius:50%;object-fit:cover;flex:none}
+.me-head span{display:grid;place-items:center;background:var(--red);color:#fff;font:800 26px "Baloo Bhai 2",sans-serif}
+.me-head h2{margin:0;font-size:22px}
+.menu{background:var(--card);border:1px solid var(--line);border-radius:20px;margin:14px 0;overflow:hidden}
+.menu button{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;text-align:left;background:none;color:var(--ink);border-bottom:1px solid var(--line);border-radius:0;padding:12px 16px;gap:0 8px}
+.menu button:last-child{border-bottom:0}
+.menu b{font-weight:600}.menu span{grid-column:1;font-weight:400;font-size:13px;color:var(--mute)}
+.menu i{grid-row:1/3;grid-column:2;align-self:center;font-style:normal;font-size:24px;color:var(--mute)}
+
+/* creator map */
+.crmap-wrap{border-radius:18px;overflow:hidden;border:1px solid var(--line);margin-top:8px}
+#crMap{height:300px;z-index:0}
+.camp{width:34px;height:34px;border-radius:50%;background:var(--card);border:2px solid var(--red);display:grid;place-items:center;box-shadow:0 2px 6px #0004}
+.camp svg{width:18px;height:18px;fill:none;stroke:var(--red);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.camp.on{background:var(--red);transform:scale(1.2)}.camp.on svg{stroke:#fff}
+.phpin{width:40px;height:40px;border-radius:12px;border:3px solid #fff;background:var(--indigo) center/cover;box-shadow:0 2px 8px #0005}
+.legend{display:flex;gap:16px;font-size:13px;color:var(--mute);margin:8px 2px}
+.legend span{display:flex;align-items:center;gap:6px}
+.camp.sm,.phpin.sm{width:16px;height:16px;border-width:2px;display:inline-block;box-shadow:none}
