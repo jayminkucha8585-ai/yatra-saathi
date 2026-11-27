@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#b3261e">
+<meta name="theme-color" content="#a8481f">
 <meta name="description" content="Plan, stay and travel across Gujarat: live map, stays, transport, safety, translator, travel buddies and creator tools.">
 <title>Yatra Saathi</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -12,16 +12,21 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@600;800&family=Hind+Vadodara:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="theme.css">
 </head>
 <body>
 <div class="app">
 <header>
   <button class="back" id="back" type="button" aria-label="Back">‹</button>
-  <div><h1 id="title">Yatra Saathi</h1><div id="status">Finding your location…</div></div>
+  <div style="flex:1"><h1 id="title">Yatra Saathi</h1><div id="status">Finding your location…</div></div>
+  <button class="hsos" type="button" data-open="sos">SOS</button>
+  <button class="hme" type="button" data-open="connect" aria-label="My traveler profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></button>
 </header>
 
 <main>
-  <section class="view on" id="v-map">
+  <section class="view on" id="v-home"></section>
+
+  <section class="view" id="v-map">
     <div id="mapwrap"><div id="map"></div><button class="sosfab" type="button" data-open="sos">SOS</button></div>
     <div class="row">
       <button class="pri" id="follow" type="button">Follow me</button>
@@ -75,10 +80,10 @@
 </main>
 
 <nav><div>
-  <button type="button" data-v="map" aria-current="page"><svg viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>Map</button>
+  <button type="button" data-v="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Home</button>
   <button type="button" data-v="places"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Places</button>
   <button type="button" data-v="stays"><svg viewBox="0 0 24 24"><path d="M3 19V7M3 13h18v6M21 13a3 3 0 0 0-3-3h-7v3"/></svg>Stays</button>
-  <button type="button" data-v="routes"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l1.5-4M16 21l-1.5-4"/></svg>Routes</button>
+  <button type="button" data-v="routes"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l1.5-4M16 21l-1.5-4"/></svg>Trips</button>
   <button type="button" data-v="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>More</button>
 </div></nav>
 </div>
@@ -106,5 +111,6 @@
 <script src="c-posts.js"></script>
 <script src="c-groupreq.js"></script>
 <script src="c-licence.js"></script>
+<script src="home.js"></script>
 </body>
 </html>
