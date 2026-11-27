@@ -1,0 +1,73 @@
+:root{--bg:#fbf7f4;--card:#fff;--ink:#1e1a22;--mute:#6c6370;--line:#ebe2de;--red:#b3261e;--indigo:#1f2a5c;--sea:#0f8f88}
+@media(prefers-color-scheme:dark){:root{--bg:#16131a;--card:#221d27;--ink:#f1ebee;--mute:#a99fae;--line:#352d3b;--red:#e0574c;--indigo:#9aa8ea;--sea:#3cc7bd}}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Hind Vadodara",system-ui,sans-serif}
+h1,h2,h3{font-family:"Baloo Bhai 2",system-ui,sans-serif;margin:0;line-height:1.15}
+h2{font-size:22px;margin:14px 0 6px}
+.app{max-width:760px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{background:var(--red);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 16px;position:relative;display:flex;gap:10px;align-items:center}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:7px;background:repeating-linear-gradient(90deg,#1f2a5c 0 14px,transparent 14px 20px,#fff4 20px 26px,transparent 26px 32px)}
+header h1{font-size:26px}
+.back{display:none;background:#fff3;color:#fff;font-size:28px;line-height:1;padding:0 14px;min-height:44px}
+.back.on{display:inline-flex}
+#status{font-size:14px;opacity:.92}
+select,input,textarea{font:inherit;font-size:16px;min-height:44px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);width:100%}
+textarea{min-height:90px}
+label{font-size:14px;color:var(--mute);display:block;margin-top:10px}
+button,.btn{font:inherit;min-height:44px;padding:8px 16px;border-radius:12px;border:0;cursor:pointer;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.pri{background:var(--red);color:#fff}.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.sec[aria-pressed=true]{background:var(--indigo);color:#fff}
+main{padding:14px;flex:1}
+.view{display:none}.view.on{display:block}
+#mapwrap{position:relative}
+#map{height:calc(100vh - 290px);min-height:340px;border-radius:18px;border:1px solid var(--line);z-index:0}
+.sosfab{position:absolute;right:12px;bottom:12px;z-index:500;width:64px;height:64px;border-radius:50%;background:#d50000;color:#fff;font-size:18px;box-shadow:0 4px 14px #0006;border:3px solid #fff}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.row>input,.row>select{width:auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:10px 0}
+.card h3{font-size:19px}
+.meta{color:var(--mute);font-size:14px}
+.tag{display:inline-block;font-size:13px;padding:2px 10px;border-radius:99px;background:color-mix(in srgb,var(--indigo) 12%,transparent);color:var(--indigo);margin:4px 4px 0 0;white-space:nowrap}
+.place{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:center;cursor:pointer}
+.badge{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff;font:800 20px "Baloo Bhai 2",sans-serif}
+.star{background:none;font-size:22px;color:var(--mute);padding:6px;min-width:44px}.star[aria-pressed=true]{color:var(--red)}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px;flex-wrap:wrap}
+.seg button{flex:1;background:transparent;color:var(--mute);padding:8px 4px}
+.seg button[aria-pressed=true]{background:var(--indigo);color:#fff}
+.price{font-weight:600;white-space:nowrap;text-align:right}
+.mode{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}
+.bar{height:6px;border-radius:6px;background:var(--line);margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--sea)}
+.best{border-color:var(--sea);box-shadow:0 0 0 1px var(--sea) inset}
+.pill{font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--sea);color:#fff;margin-left:6px;white-space:nowrap}
+.note{font-size:13px;color:var(--mute);margin:10px 2px}
+.empty{text-align:center;color:var(--mute);padding:28px 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:left;flex-direction:column;align-items:flex-start;min-height:104px;color:var(--ink)}
+.tile b{font-family:"Baloo Bhai 2",sans-serif;font-size:18px}
+.tile span{font-weight:400;font-size:13px;color:var(--mute)}
+.tile.sos{background:#d50000;color:#fff;border-color:#d50000}.tile.sos span{color:#fff}
+.big{font-size:44px;font-weight:800;font-family:"Baloo Bhai 2",sans-serif;line-height:1}
+.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;text-align:center}
+.days div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 2px;font-size:13px}
+.check{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.check input{width:22px;height:22px;min-height:0}
+.check.done span{text-decoration:line-through;color:var(--mute)}
+ul.tips{margin:6px 0;padding-left:20px}ul.tips li{margin:4px 0}
+.post img{width:100%;border-radius:12px;margin-top:8px;display:block}
+.sosbig{width:100%;min-height:120px;font-size:30px;background:#d50000;color:#fff;border-radius:20px}
+.call{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:1000}
+nav div{display:flex;max-width:760px;width:100%}
+nav button{flex:1;background:none;color:var(--mute);flex-direction:column;gap:2px;font-size:12px;padding:6px 2px}
+nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav button[aria-current=page]{color:var(--red)}
+.sheet{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:2000}
+.sheet.on{display:flex}
+.sheet>div{background:var(--card);width:100%;max-width:760px;border-radius:22px 22px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));max-height:85vh;overflow:auto}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;z-index:3000;display:none;max-width:90vw}
+.toast.on{display:block}
+.pin{width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#b3261e;border:2px solid #fff;box-shadow:0 2px 6px #0005}
+.pin.on{background:#0f8f88}
+.fuelpin{width:22px;height:22px;border-radius:6px;background:#e65100;border:2px solid #fff;color:#fff;font:700 11px sans-serif;display:grid;place-items:center}
+.me{width:18px;height:18px;border-radius:50%;background:#1f2a5c;border:3px solid #fff;box-shadow:0 0 0 6px #1f2a5c33}
+#install{display:none}
