@@ -13,78 +13,81 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@600;800&family=Hind+Vadodara:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="pro.css">
 </head>
 <body>
+<div class="auth on" id="auth" role="dialog" aria-modal="true" aria-label="Sign up to Yatra Saathi"></div>
 <div class="app">
 <header>
-  <button class="back" id="back" type="button" aria-label="Back">‹</button>
-  <div style="flex:1"><h1 id="title">Yatra Saathi</h1><div id="status">Finding your location…</div></div>
-  <button class="hsos" type="button" data-open="sos">SOS</button>
-  <button class="hme" type="button" data-open="connect" aria-label="My traveler profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></button>
+<button class="back" id="back" type="button" aria-label="Back">‹</button>
+<div style="flex:1"><h1 id="title">Yatra Saathi</h1><div id="status">Finding your location…</div></div>
+<button class="hsos" type="button" data-open="sos">SOS</button>
+<button class="hme" type="button" data-open="connect" aria-label="My traveler profile"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg></button>
 </header>
 
 <main>
-  <section class="view on" id="v-home"></section>
+<section class="view on" id="v-home"></section>
 
-  <section class="view" id="v-map">
-    <div id="mapwrap"><div id="map"></div><button class="sosfab" type="button" data-open="sos">SOS</button></div>
-    <div class="row">
-      <button class="pri" id="follow" type="button">Follow me</button>
-      <button class="sec" id="fuel" type="button" aria-pressed="false">Petrol pumps</button>
-      <button class="sec" id="install" type="button">Install app</button>
-    </div>
-    <div class="meta" id="routeInfo">Tap a red pin to plan a trip.</div>
-  </section>
+<section class="view" id="v-map">
+<div id="mapwrap"><div id="map"></div><button class="sosfab" type="button" data-open="sos">SOS</button></div>
+<div class="row">
+<button class="pri" id="follow" type="button">Follow me</button>
+<button class="sec" id="fuel" type="button" aria-pressed="false">Petrol pumps</button>
+<button class="sec" id="install" type="button">Install app</button>
+</div>
+<div class="meta" id="routeInfo">Tap a red pin to plan a trip.</div>
+</section>
 
-  <section class="view" id="v-places">
-    <div class="row">
-      <input id="q" type="search" placeholder="Search, e.g. beach, temple" style="flex:1" aria-label="Search places">
-      <select id="cat" aria-label="Category"></select>
-    </div>
-    <div class="row"><button class="sec" id="favOnly" type="button" aria-pressed="false">Saved only</button></div>
-    <div id="placeList"></div>
-  </section>
+<section class="view" id="v-places">
+<div class="row">
+<input id="q" type="search" placeholder="Search, e.g. beach, temple" style="flex:1" aria-label="Search places">
+<select id="cat" aria-label="Category"></select>
+</div>
+<div class="row"><button class="sec" id="favOnly" type="button" aria-pressed="false">Saved only</button></div>
+<div id="placeList"></div>
+</section>
 
-  <section class="view" id="v-stays">
-    <div class="row"><select id="stayAt" aria-label="Destination" style="flex:1"></select></div>
-    <div class="seg" id="tier">
-      <button type="button" data-t="0" aria-pressed="true">Economy</button>
-      <button type="button" data-t="1" aria-pressed="false">Mid-range</button>
-      <button type="button" data-t="2" aria-pressed="false">Premium</button>
-    </div>
-    <div id="stayList"></div>
-    <p class="note">Hotels come live from OpenStreetMap. Budget tier is guessed from the place type and star rating.</p>
-  </section>
+<section class="view" id="v-stays">
+<div class="row"><select id="stayAt" aria-label="Destination" style="flex:1"></select></div>
+<div class="seg" id="tier">
+<button type="button" data-t="0" aria-pressed="true">Economy</button>
+<button type="button" data-t="1" aria-pressed="false">Mid-range</button>
+<button type="button" data-t="2" aria-pressed="false">Premium</button>
+</div>
+<div id="stayList"></div>
+<p class="note">Hotels come live from OpenStreetMap. Budget tier is guessed from the place type and star rating.</p>
+</section>
 
-  <section class="view" id="v-routes">
-    <div class="row"><select id="routeTo" aria-label="Destination" style="flex:1"></select></div>
-    <div class="row"><label for="ppl">Travellers</label><input id="ppl" type="number" min="1" max="200" value="2" style="width:90px"></div>
-    <div class="meta" id="dist"></div>
-    <div id="modeList"></div>
-    <div class="row" id="dirLinks"></div>
-    <p class="note">Road distance and drive time are live from OSRM. Fares are rough estimates (fuel, GSRTC bus, sleeper/2S train, Okha ferry).</p>
-  </section>
+<section class="view" id="v-routes">
+<div class="row"><select id="routeTo" aria-label="Destination" style="flex:1"></select></div>
+<div class="row"><label for="ppl">Travellers</label><input id="ppl" type="number" min="1" max="200" value="2" style="width:90px"></div>
+<div class="meta" id="dist"></div>
+<div id="modeList"></div>
+<div class="row" id="dirLinks"></div>
+<p class="note">Road distance and drive time are live from OSRM. Fares are rough estimates (fuel, GSRTC bus, sleeper/2S train, Okha ferry).</p>
+</section>
 
-  <section class="view" id="v-more">
-    <div class="grid" id="hub"></div>
-  </section>
+<section class="view" id="v-more">
+<div class="grid" id="hub"></div>
+</section>
 
-  <section class="view" id="v-sos"></section>
-  <section class="view" id="v-weather"></section>
-  <section class="view" id="v-translate"></section>
-  <section class="view" id="v-guide"></section>
-  <section class="view" id="v-group"></section>
-  <section class="view" id="v-creator"></section>
-  <section class="view" id="v-connect"></section>
-  <section class="view" id="v-licence"></section>
+<section class="view" id="v-sos"></section>
+<section class="view" id="v-weather"></section>
+<section class="view" id="v-translate"></section>
+<section class="view" id="v-guide"></section>
+<section class="view" id="v-group"></section>
+<section class="view" id="v-creator"></section>
+<section class="view" id="v-connect"></section>
+<section class="view" id="v-licence"></section>
+<section class="view" id="v-me"></section>
 </main>
 
 <nav><div>
-  <button type="button" data-v="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Home</button>
-  <button type="button" data-v="places"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Places</button>
-  <button type="button" data-v="stays"><svg viewBox="0 0 24 24"><path d="M3 19V7M3 13h18v6M21 13a3 3 0 0 0-3-3h-7v3"/></svg>Stays</button>
-  <button type="button" data-v="routes"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l1.5-4M16 21l-1.5-4"/></svg>Trips</button>
-  <button type="button" data-v="more"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>More</button>
+<button type="button" data-v="home" aria-current="page"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/><path d="M9 20v-6h6v6"/></svg>Home</button>
+<button type="button" data-v="places"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Places</button>
+<button type="button" data-v="stays"><svg viewBox="0 0 24 24"><path d="M3 19V7M3 13h18v6M21 13a3 3 0 0 0-3-3h-7v3"/></svg>Stays</button>
+<button type="button" data-v="routes"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l1.5-4M16 21l-1.5-4"/></svg>Trips</button>
+<button type="button" data-v="me"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>Profile</button>
 </div></nav>
 </div>
 
@@ -96,21 +99,27 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="places.js"></script>
+<script src="places2.js"></script>
 <script src="app1.js"></script>
 <script src="app2.js"></script>
 <script src="app3.js"></script>
 <script src="app4.js"></script>
+<script src="photos.js"></script>
 <script src="t-sos.js"></script>
 <script src="t-weather.js"></script>
 <script src="t-translate.js"></script>
 <script src="t-guide.js"></script>
 <script src="t-group.js"></script>
+<script src="t-lang.js"></script>
+<script src="t-scripts.js"></script>
 <script src="t-creator.js"></script>
 <script src="c-core.js"></script>
+<script src="auth.js"></script>
+<script src="me.js"></script>
 <script src="c-connect.js"></script>
 <script src="c-posts.js"></script>
 <script src="c-groupreq.js"></script>
 <script src="c-licence.js"></script>
 <script src="home.js"></script>
 </body>
-</html>
+  </html>
