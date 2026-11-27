@@ -44,15 +44,15 @@ const u = A && A.currentUser;
 if(u && !u.isAnonymous){
 const pr = store.get("profile", {});
 if(!pr.name){ pr.name = u.displayName || (u.email || "Traveler").split("@")[0]; store.set("profile", pr) }
-YS.user = u; el.classList.remove("on"); YS.renderers.me && YS.renderers.me();
-} else { el.classList.add("on"); $("#auWait").hidden = true; $("#auBody").hidden = false }
+store.set("signedIn", true); YS.user = u; el.classList.remove("on"); YS.renderers.me && YS.renderers.me();
+} else { store.set("signedIn", false); el.classList.add("on"); $("#auWait").hidden = true; $("#auBody").hidden = false }
 }
 YS.signedIn = () => !!(A && A.currentUser && !A.currentUser.isAnonymous);
 
 if(!A){ $("#auWait").hidden = true; $("#auBody").hidden = false; $("#auSkip").hidden = false; toast("You're offline. Sign up when you're back online.") }
 else {
 A.onAuthStateChanged(check);
-A.getRedirectResult().then(check).catch(err);
+A.getRedirectResult().then(r => { if(r && r.user) check() }).catch(err);
 setTimeout(() => { if(el.classList.contains("on") && !navigator.onLine) $("#auSkip").hidden = false }, 4000);
 }
 $("#auSkip").onclick = () => el.classList.remove("on");
