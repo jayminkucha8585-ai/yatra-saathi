@@ -1,6 +1,6 @@
 // Service worker: lets the app open offline and be installed.
-const CACHE = "yatra-v1";
-const SHELL = ["./", "index.html", "app.js", "places.js", "manifest.webmanifest", "icon.svg",
+const CACHE = "yatra-v3";
+const SHELL = ["./", "index.html", "style.css", "places.js", "app1.js", "app2.js", "app3.js", "app4.js", "t-sos.js", "t-weather.js", "t-translate.js", "t-guide.js", "t-group.js", "t-creator.js", "c-core.js", "c-connect.js", "c-posts.js", "c-groupreq.js", "c-licence.js", "manifest.webmanifest", "icon.svg",
   "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css", "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"];
 
 self.addEventListener("install", e => {
@@ -12,8 +12,8 @@ self.addEventListener("activate", e => {
 self.addEventListener("fetch", e => {
   if(e.request.method !== "GET") return;
   const url = new URL(e.request.url);
-  // Live data (routes, hotels) always from the network
-  if(/osrm|overpass/.test(url.host)) return;
+  // Live data (routes, hotels, weather, database) always straight from the network
+  if(url.origin !== location.origin && url.host !== "unpkg.com" && !url.host.endsWith("tile.openstreetmap.org")) return;
   // Map tiles: cache as you browse, so visited areas work offline
   if(url.host.endsWith("tile.openstreetmap.org")){
     e.respondWith(caches.open("yatra-tiles").then(async c => {
