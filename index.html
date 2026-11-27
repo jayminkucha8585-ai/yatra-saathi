@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b3261e">
+<meta name="description" content="Plan, stay and travel across Gujarat: live map, places, stays by budget and transport comparison.">
+<title>Yatra Saathi</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@600;800&family=Hind+Vadodara:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf7f4;--card:#fff;--ink:#1e1a22;--mute:#6c6370;--line:#ebe2de;--red:#b3261e;--indigo:#1f2a5c;--sea:#0f8f88}
+@media(prefers-color-scheme:dark){:root{--bg:#16131a;--card:#221d27;--ink:#f1ebee;--mute:#a99fae;--line:#352d3b;--red:#e0574c;--indigo:#9aa8ea;--sea:#3cc7bd}}
+*{box-sizing:border-box;min-width:0}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Hind Vadodara",system-ui,sans-serif}
+h1,h2,h3{font-family:"Baloo Bhai 2",system-ui,sans-serif;margin:0;line-height:1.1}
+.app{max-width:760px;margin:0 auto;min-height:100vh;display:flex;flex-direction:column;padding-bottom:calc(76px + env(safe-area-inset-bottom))}
+header{background:var(--red);color:#fff;padding:calc(12px + env(safe-area-inset-top)) 16px 16px;position:relative}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:7px;background:repeating-linear-gradient(90deg,#1f2a5c 0 14px,transparent 14px 20px,#fff4 20px 26px,transparent 26px 32px)}
+header h1{font-size:28px}
+#status{font-size:14px;opacity:.92;margin-top:2px}
+select,input{font:inherit;font-size:16px;min-height:44px;padding:8px 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+button,.btn{font:inherit;min-height:44px;padding:8px 16px;border-radius:12px;border:0;cursor:pointer;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.pri{background:var(--red);color:#fff}.sec{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+main{padding:14px;flex:1}
+.view{display:none}.view.on{display:block}
+#map{height:calc(100vh - 260px);min-height:360px;border-radius:18px;border:1px solid var(--line);z-index:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin:10px 0}
+.card h3{font-size:19px}
+.meta{color:var(--mute);font-size:14px}
+.tag{display:inline-block;font-size:13px;padding:2px 10px;border-radius:99px;background:color-mix(in srgb,var(--indigo) 12%,transparent);color:var(--indigo);margin:4px 4px 0 0;white-space:nowrap}
+.place{display:grid;grid-template-columns:48px minmax(0,1fr) auto;gap:12px;align-items:center;cursor:pointer}
+.badge{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;color:#fff;font:800 20px "Baloo Bhai 2",sans-serif}
+.star{background:none;font-size:22px;color:var(--mute);padding:6px;min-width:44px}.star[aria-pressed=true]{color:var(--red)}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px;gap:4px}
+.seg button{flex:1;background:transparent;color:var(--mute);padding:8px 4px}
+.seg button[aria-pressed=true]{background:var(--indigo);color:#fff}
+.price{font-weight:600;white-space:nowrap;text-align:right}
+.mode{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center}
+.bar{height:6px;border-radius:6px;background:var(--line);margin-top:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--sea)}
+.best{border-color:var(--sea);box-shadow:0 0 0 1px var(--sea) inset}
+.pill{font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--sea);color:#fff;margin-left:6px;white-space:nowrap}
+.note{font-size:13px;color:var(--mute);margin:10px 2px}
+.empty{text-align:center;color:var(--mute);padding:28px 10px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 6px calc(6px + env(safe-area-inset-bottom));z-index:1000}
+nav div{display:flex;max-width:760px;width:100%}
+nav button{flex:1;background:none;color:var(--mute);flex-direction:column;gap:2px;font-size:13px;padding:6px 2px}
+nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+nav button[aria-current=page]{color:var(--red)}
+.sheet{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center;z-index:2000}
+.sheet.on{display:flex}
+.sheet>div{background:var(--card);width:100%;max-width:760px;border-radius:22px 22px 0 0;padding:20px 18px calc(24px + env(safe-area-inset-bottom));max-height:85vh;overflow:auto}
+.pin{width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#b3261e;border:2px solid #fff;box-shadow:0 2px 6px #0005}
+.pin.on{background:#0f8f88}
+.me{width:18px;height:18px;border-radius:50%;background:#1f2a5c;border:3px solid #fff;box-shadow:0 0 0 6px #1f2a5c33}
+#install{display:none}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <h1>Yatra Saathi</h1>
+  <div id="status">Finding your location…</div>
+</header>
+
+<main>
+  <section class="view on" id="v-map">
+    <div id="map"></div>
+    <div class="row">
+      <button class="pri" id="follow" type="button">Follow me</button>
+      <button class="sec" id="install" type="button">Install app</button>
+      <span class="meta" id="routeInfo">Tap a red pin to plan a trip.</span>
+    </div>
+  </section>
+
+  <section class="view" id="v-places">
+    <h2 style="font-size:26px">Places to visit</h2>
+    <div class="row">
+      <input id="q" type="search" placeholder="Search, e.g. beach, temple" style="flex:1" aria-label="Search places">
+      <select id="cat" aria-label="Category"></select>
+    </div>
+    <div class="row"><button class="sec" id="favOnly" type="button" aria-pressed="false">Saved only</button></div>
+    <div id="placeList"></div>
+  </section>
+
+  <section class="view" id="v-stays">
+    <h2 style="font-size:26px">Stays by budget</h2>
+    <div class="row"><select id="stayAt" aria-label="Destination" style="flex:1"></select></div>
+    <div class="seg" id="tier">
+      <button type="button" data-t="0" aria-pressed="true">Economy</button>
+      <button type="button" data-t="1" aria-pressed="false">Mid-range</button>
+      <button type="button" data-t="2" aria-pressed="false">Premium</button>
+    </div>
+    <div id="stayList"></div>
+    <p class="note">Hotels come live from OpenStreetMap. Budget tier is guessed from the place type and star rating.</p>
+  </section>
+
+  <section class="view" id="v-routes">
+    <h2 style="font-size:26px">Compare transport</h2>
+    <div class="row"><select id="routeTo" aria-label="Destination" style="flex:1"></select></div>
+    <div class="row"><label for="ppl">Travellers</label><input id="ppl" type="number" min="1" max="200" value="2" style="width:90px"></div>
+    <div class="meta" id="dist"></div>
+    <div id="modeList"></div>
+    <div class="row" id="dirLinks"></div>
+    <p class="note">Road distance and drive time are live from OSRM. Fares are rough estimates (fuel, GSRTC bus, sleeper/2S train, Okha ferry).</p>
+  </section>
+</main>
+
+<nav><div>
+  <button type="button" data-v="map" aria-current="page"><svg viewBox="0 0 24 24"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>Map</button>
+  <button type="button" data-v="places"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Places</button>
+  <button type="button" data-v="stays"><svg viewBox="0 0 24 24"><path d="M3 19V7M3 13h18v6M21 13a3 3 0 0 0-3-3h-7v3"/></svg>Stays</button>
+  <button type="button" data-v="routes"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l1.5-4M16 21l-1.5-4"/></svg>Routes</button>
+</div></nav>
+</div>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"><div id="sBody"></div></div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="places.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
