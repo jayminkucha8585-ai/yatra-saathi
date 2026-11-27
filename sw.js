@@ -1,6 +1,6 @@
 // Service worker: lets the app open offline and be installed.
-const CACHE = "yatra-v3";
-const SHELL = ["./", "index.html", "style.css", "places.js", "app1.js", "app2.js", "app3.js", "app4.js", "t-sos.js", "t-weather.js", "t-translate.js", "t-guide.js", "t-group.js", "t-creator.js", "c-core.js", "c-connect.js", "c-posts.js", "c-groupreq.js", "c-licence.js", "manifest.webmanifest", "icon.svg",
+const CACHE = "yatra-v5";
+const SHELL = ["./", "index.html", "style.css", "theme.css", "places.js", "app1.js", "app2.js", "app3.js", "app4.js", "t-sos.js", "t-weather.js", "t-translate.js", "t-guide.js", "t-group.js", "t-creator.js", "c-core.js", "c-connect.js", "c-posts.js", "c-groupreq.js", "c-licence.js", "home.js", "manifest.webmanifest", "icon.svg",
   "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css", "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"];
 
 self.addEventListener("install", e => {
