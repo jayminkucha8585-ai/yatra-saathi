@@ -1,6 +1,6 @@
 /* Desert Dunes theme + Home screen. Loaded after style.css */
-:root{--bg:#fbf4e8;--card:#fff;--ink:#2b1d14;--mute:#6b5444;--line:#e8d8c0;--red:#a8481f;--indigo:#2e3a6b;--sea:#1e6b63;--dune:#d98a4e}
-@media(prefers-color-scheme:dark){:root{--bg:#1c140f;--card:#2a1f18;--ink:#f6eadb;--mute:#c4ad96;--line:#3e2f24;--red:#b5552a;--indigo:#4a5a9e;--sea:#2a7d72;--dune:#7a4a2a}}
+:root{--bg:#fbf4e8;--card:#fff;--ink:#2b1d14;--mute:#6b5444;--line:#e8d8c0;--red:#a8481f;--indigo:#2e3a6b;--sea:#1e6b63;--dune:#d98a4e;--soft:#f4e2c9}
+@media(prefers-color-scheme:dark){:root{--bg:#1c140f;--card:#2a1f18;--ink:#f6eadb;--mute:#c4ad96;--line:#3e2f24;--red:#b5552a;--indigo:#4a5a9e;--sea:#2a7d72;--dune:#7a4a2a;--soft:#3a2a1f}}
 header{background:var(--red);color:#fff;padding:calc(16px + env(safe-area-inset-top)) 16px 40px;position:relative;display:flex;gap:10px;align-items:center}
 header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:26px;background:var(--bg);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V18C70 6 140 8 200 16C260 24 330 10 390 14V26Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V18C70 6 140 8 200 16C260 24 330 10 390 14V26Z'/%3E%3C/svg%3E") center/100% 100% no-repeat}
 header::before{content:"";position:absolute;left:0;right:0;bottom:8px;height:26px;background:var(--dune);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V20C60 2 120 2 180 16C230 26 280 4 330 6C360 8 380 12 390 16V26Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 390 26' preserveAspectRatio='none'%3E%3Cpath d='M0 26V20C60 2 120 2 180 16C230 26 280 4 330 6C360 8 380 12 390 16V26Z'/%3E%3C/svg%3E") center/100% 100% no-repeat}
@@ -9,21 +9,24 @@ header>*{position:relative;z-index:1}
 .pin{width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#a8481f;border:2px solid #fff;box-shadow:0 2px 6px #0005}
 .pin.on{background:#1e6b63}
 .me{width:18px;height:18px;border-radius:50%;background:#2e3a6b;border:3px solid #fff;box-shadow:0 0 0 6px #2e3a6b33}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-.hsearch{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:6px 6px 6px 14px;box-shadow:0 6px 18px #6b544422;margin-top:-6px}
-.hsearch svg{width:22px;height:22px;flex:none;stroke:var(--mute);fill:none;stroke-width:2;stroke-linecap:round}
-.hsearch input{border:0;min-height:44px;padding:8px 4px;background:transparent}
-.hsearch button{flex:none}
-.svc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:16px 0}
-.svc button{flex-direction:column;background:none;color:var(--ink);font-size:13px;font-weight:600;padding:6px 2px;gap:6px;min-height:84px}
-.svc i{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:color-mix(in srgb,var(--red) 12%,var(--card));color:var(--red)}
-.svc svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.svc .red i{background:#d50000;color:#fff}
-.plan h2{margin-top:0}
-.plan label{color:var(--mute)}
-.hscroll{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 10px;scroll-snap-type:x mandatory}
-.pcard{flex:0 0 150px;scroll-snap-align:start;flex-direction:column;align-items:flex-start;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:8px;color:var(--ink);gap:2px}
-.pimg{width:100%;height:84px;border-radius:12px;display:grid;place-items:center;color:#fff;font:800 34px "Baloo Bhai 2",sans-serif;margin-bottom:6px}
-.pcard b{font-family:"Baloo Bhai 2",sans-serif;font-size:16px;line-height:1.2}
-.pcard .meta{font-size:12px;font-weight:400}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.hsos{margin-left:auto;min-height:40px;padding:0 14px;border:2px solid #fff;border-radius:99px;background:#c62828;color:#fff;font:800 14px "Baloo Bhai 2",sans-serif}
+.hme{width:44px;height:44px;padding:0;border-radius:50%;background:#ffffff33;color:#fff}
+.hme svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+#v-home .tiles{margin-top:-40px;position:relative;z-index:2;background:var(--card);border-radius:20px;padding:10px 6px;box-shadow:0 6px 20px #2b1d1422;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px}
+.tiles button{flex-direction:column;background:none;color:var(--ink);font-size:12px;padding:6px 2px;gap:6px;min-height:78px}
+.tiles i{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:var(--soft);color:var(--red)}
+.tiles svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.search{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px;margin:12px 0;display:grid;gap:10px}
+.search .seg{background:var(--bg);border:0}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.fld{border:1px solid var(--line);border-radius:12px;padding:6px 10px;margin:0;font-size:12px;color:var(--mute);display:block}
+.fld b{display:block;font:800 18px/1.3 "Baloo Bhai 2",sans-serif;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fld input,.fld select{border:0;padding:0;min-height:34px;background:transparent;font:800 17px "Baloo Bhai 2",sans-serif;color:var(--ink)}
+.go{width:100%;min-height:52px;border-radius:99px;background:var(--red);color:#fff;font:800 18px "Baloo Bhai 2",sans-serif;letter-spacing:.04em}
+.offers{display:flex;gap:10px;overflow-x:auto;padding-bottom:6px;scroll-snap-type:x mandatory}
+.offer{flex:0 0 230px;scroll-snap-align:start;flex-direction:column;align-items:flex-start;text-align:left;gap:2px;border-radius:16px;padding:12px 14px}
+.offer.a{background:var(--indigo);color:#fff}.offer.b{background:var(--soft);color:var(--ink)}
+.offer small{font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.offer b{font:800 16px/1.2 "Baloo Bhai 2",sans-serif}
+.offer span{font-weight:400;font-size:12px}
+.pick{outline:3px solid var(--indigo);outline-offset:2px}
