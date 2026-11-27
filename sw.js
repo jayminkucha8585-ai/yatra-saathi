@@ -1,6 +1,6 @@
 // Service worker: lets the app open offline and be installed.
-const CACHE = "yatra-v6";
-const SHELL = ["./", "index.html", "style.css", "theme.css", "pro.css", "places2.js", "photos.js", "t-lang.js", "t-scripts.js", "auth.js", "me.js", "places.js", "app1.js", "app2.js", "app3.js", "app4.js", "t-sos.js", "t-weather.js", "t-translate.js", "t-guide.js", "t-group.js", "t-creator.js", "c-core.js", "c-connect.js", "c-posts.js", "c-groupreq.js", "c-licence.js", "home.js", "manifest.webmanifest", "icon.svg",
+const CACHE = "yatra-v7";
+const SHELL = ["./", "index.html", "style.css", "theme.css", "pro.css", "stays.css", "places2.js", "photos.js", "t-lang.js", "t-scripts.js", "auth.js", "me.js", "stays.js", "stay-detail.js", "nav.js", "places.js", "app1.js", "app2.js", "app3.js", "app4.js", "t-sos.js", "t-weather.js", "t-translate.js", "t-guide.js", "t-group.js", "t-creator.js", "c-core.js", "c-connect.js", "c-posts.js", "c-groupreq.js", "c-licence.js", "home.js", "manifest.webmanifest", "icon.svg",
 "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css", "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"];
 
 self.addEventListener("install", e => {
