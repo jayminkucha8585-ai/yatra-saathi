@@ -6,6 +6,10 @@
 <meta name="theme-color" content="#a8481f">
 <meta name="description" content="Plan, stay and travel across Gujarat: live map, stays, transport, safety, translator, travel buddies and creator tools.">
 <title>Yatra Saathi</title>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://tile.openstreetmap.org">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon.svg">
@@ -18,6 +22,7 @@
 </head>
 <body>
 <div class="auth on" id="auth" role="dialog" aria-modal="true" aria-label="Sign up to Yatra Saathi"></div>
+<script>try{if(localStorage.getItem("ys-signedIn")==="true")document.getElementById("auth").classList.remove("on")}catch(e){}</script>
 <div class="app">
 <header>
 <button class="back" id="back" type="button" aria-label="Back">‹</button>
