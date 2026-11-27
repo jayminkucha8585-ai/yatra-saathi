@@ -29,8 +29,13 @@ const cache = {};
 async function load(c){
 const key = c.lat.toFixed(2)+","+c.lng.toFixed(2);
 if(cache[key]) return cache[key];
+const saved = store.get("stc", {}), hit = saved[key];
+if(hit && Date.now() - hit.t < 864e5) return cache[key] = hit.d.map(s => ({...s, dist: km(c, s)}));
 const j = await YS.overpass(`[out:json][timeout:25];nwr(around:${c.id === "me" ? 6000 : 9000},${c.lat},${c.lng})[tourism~"^(hotel|guest_house|hostel|motel|resort|camp_site|chalet|apartment)$"][name];out center 120;`);
-return cache[key] = j.elements.map(parse).filter(s => s.lat).map(s => ({...s, dist: km(c, s)}));
+const d = j.elements.map(parse).filter(s => s.lat);
+const keep = Object.entries(saved).sort((a, b) => b[1].t - a[1].t).slice(0, 5);
+store.set("stc", {...Object.fromEntries(keep), [key]: {t: Date.now(), d}});
+return cache[key] = d.map(s => ({...s, dist: km(c, s)}));
 }
 let tier = 0, sort = "near", only = "", saved = false, last = [];
 const box = $("#stayList");
