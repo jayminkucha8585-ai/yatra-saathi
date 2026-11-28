@@ -1,5 +1,5 @@
 // Service worker: opens the app instantly from the phone's storage, then quietly updates in the background.
-const CACHE = "yatra-v17";
+const CACHE = "yatra-v18";
 const SHELL = ["./", "index.html", "style.css", "theme.css", "pro.css", "stays.css", "places.js", "places2.js", "app1.js", "app2.js", "app3.js", "app4.js", "photos.js", "t-sos.js", "t-weather.js", "t-translate.js", "t-guide.js", "t-group.js", "t-lang.js", "t-scripts.js", "t-creator.js", "c-core.js", "auth.js", "me.js", "c-connect.js", "c-posts.js", "c-groupreq.js", "c-licence.js", "stays.js", "stay-detail.js", "nav.js", "home.js", "india.css", "india-data.js", "india.js", "photospots.js", "india2.js", "tools.js", "social.js", "trip.js", "extra.js", "help.js", "profile.js", "glass.css", "manifest.webmanifest", "icon.svg",
   "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css", "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"];
 // libraries with fixed versions (Leaflet, Firebase, fonts) never change, so keep them
