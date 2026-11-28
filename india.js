@@ -64,6 +64,7 @@ $("#sBody").innerHTML = `<div class="hero" data-photo="${esc(p.id)}"><b>${esc(p.
 <button class="sec" type="button" data-go="stays">Find stays</button>
 <button class="sec" type="button" data-go="weather">Weather</button>
 <button class="sec" type="button" data-act="photos" data-pid="${p.id}">Photo spots</button>
+<button class="sec" type="button" data-act="pano" data-lat="${p.lat}" data-lng="${p.lng}">360° view</button>
 <button class="sec" type="button" data-go="creator">Creator spots & script</button>
 <button class="sec" type="button" data-go="close">Close</button></div>
 <p class="note photo-credit">Text and photo: Wikipedia / Wikimedia Commons</p>`;
@@ -77,6 +78,7 @@ const p = PLACES.find(x => x.id === id); if(p && p.live) return YS.openLive(p);
 op(id);
 const row = $("#sBody .row");
 if(row && !row.querySelector("[data-act=photos]")) row.insertAdjacentHTML("beforeend", `<button class="sec" type="button" data-act="photos" data-pid="${id}">Photo spots</button>`);
+if(row && p && !row.querySelector("[data-act=pano]")) row.insertAdjacentHTML("beforeend", `<button class="sec" type="button" data-act="pano" data-lat="${p.lat}" data-lng="${p.lng}">360° view</button>`);
 };
 
 // home tiles: All India + Photo spots
@@ -85,5 +87,8 @@ if(tiles) tiles.insertAdjacentHTML("beforeend", `<button type="button" data-act=
 <button type="button" data-open="photos"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></i>Photo spots</button>`);
 document.addEventListener("click", e => {
 if(e.target.closest("[data-act=india]")){ YS.show("places"); YS.indiaMode(true) }
+// 360° view: opens Google Street View (official free Maps link) at the place; Google picks the nearest 360° photo
+const pv = e.target.closest("[data-act=pano]");
+if(pv) window.open(`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${encodeURIComponent(pv.dataset.lat + "," + pv.dataset.lng)}`, "_blank", "noopener");
 });
 })();
