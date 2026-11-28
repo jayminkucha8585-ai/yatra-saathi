@@ -91,4 +91,64 @@ if(e.target.closest("[data-act=india]")){ YS.show("places"); YS.indiaMode(true) 
 const pv = e.target.closest("[data-act=pano]");
 if(pv) window.open(`https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${encodeURIComponent(pv.dataset.lat + "," + pv.dataset.lng)}`, "_blank", "noopener");
 });
+
+// ---------- the whole app is for all of India ----------
+// Places tab: "All India" first and open by default; Gujarat picks second
+const pm = $("#plMode"); pm.prepend(pm.querySelector('[data-m="i"]'));
+YS.indiaMode = on => { v.classList.toggle("india-on", on); $("#india").hidden = !on;
+pm.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", (b.dataset.m === "i") === on));
+if(on && !$("#iList").innerHTML && v.classList.contains("on")) near() };
+YS.indiaMode(true);
+const rp = YS.renderers.places;
+YS.renderers.places = () => { rp && rp(); if(!$("#india").hidden && !$("#iList").innerHTML) near() };
+
+// trains run all over India: live places get train options too
+PLACES.forEach(p => { if(p.live) p.rail = 1 });
+const ap = YS.addPlace;
+YS.addPlace = (p, keep) => { if(p && p.live) p.rail = 1; return ap(p, keep) };
+
+// transport wording for every state, not one state's bus company
+if(typeof window.renderRoutes === "function"){
+const rr = window.renderRoutes;
+window.renderRoutes = async (...a) => { await rr(...a); const ml = $("#modeList"); if(ml) ml.innerHTML = ml.innerHTML.replace(/GSRTC express seat/g, "State transport express seat") };
+}
+const rn = $("#v-routes .note"); if(rn) rn.textContent = "Road distance and drive time are live from OSRM. Fares are rough estimates (fuel, state bus, sleeper/2S train, ferry where needed).";
+
+// sign-up text
+const fixAuth = () => { const a = $("#auth"); if(!a) return; a.querySelectorAll(".meta").forEach(m => { if(m.textContent.includes("across Gujarat")) m.textContent = m.textContent.replace("across Gujarat", "across India") }) };
+fixAuth(); if($("#auth")) new MutationObserver(fixAuth).observe($("#auth"), {childList:true, subtree:true});
+
+// Home: plan a trip to any place in India + famous places across India
+const hTo = $("#hTo");
+if(hTo){
+hTo.closest(".fld").insertAdjacentHTML("afterend", `<form class="fld" id="hFind" style="grid-column:1/-1">Or any place in India<span class="row" style="margin:4px 0 0"><input id="hQ" type="search" placeholder="e.g. Taj Mahal, Munnar, Goa" style="flex:1" aria-label="Search any place in India"><button class="sec" type="submit">Find</button></span></form>`);
+$("#hFind").onsubmit = async e => {
+e.preventDefault(); const q = $("#hQ").value.trim(); if(!q) return;
+toast("Finding " + q + "…");
+try{
+let p = (await YS.wikiSearch(q)).list[0];
+if(!p){ const g = await YS.geocode(q); if(g) p = (await YS.wikiNear(g.lat, g.lng, 10000))[0] }
+if(!p) return toast("Place not found. Try another name.");
+p = YS.addPlace(p);
+if(!hTo.querySelector(`option[value="${p.id}"]`)) hTo.insertAdjacentHTML("beforeend", `<option value="${p.id}">${esc(p.n)}</option>`);
+hTo.value = p.id; selectPlace(p.id); toast("Trip to " + p.n + ". Tap Compare & Plan.");
+}catch(err){ toast("Couldn't search. Check your internet.") }
+};
+}
+const gems = $("#v-home .offers.gems");
+if(gems){
+const h = gems.previousElementSibling; if(h && h.tagName === "H2") h.textContent = "Hidden gems in Gujarat";
+(h && h.tagName === "H2" ? h : gems).insertAdjacentHTML("beforebegin", `<h2>Famous across India</h2><div class="offers gems" id="hIndia"><div class="empty">Loading places…</div></div>`);
+const TOP = ["Taj Mahal","Amer Fort","Golden Temple","Hawa Mahal","Gateway of India","Meenakshi Temple","Group of Monuments at Hampi","Victoria Memorial, Kolkata","Kaziranga National Park","Pangong Tso","Dal Lake","Radhanagar Beach","Basilica of Bom Jesus","Konark Sun Temple","Khajuraho Group of Monuments","Statue of Unity"];
+const homeIndia = {};
+fetch("https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=coordinates|pageimages|description&piprop=thumbnail&pithumbsize=500&colimit=50&pilimit=50&redirects=1&titles=" + encodeURIComponent(TOP.join("|")))
+.then(r => r.json()).then(j => {
+const order = t => { const i = TOP.indexOf(t); return i < 0 ? 99 : i };
+const list = Object.values((j.query && j.query.pages) || {}).sort((a,b) => order(a.title) - order(b.title)).map(YS.toPlace).filter(Boolean);
+list.forEach(p => homeIndia[p.id] = p);
+$("#hIndia").innerHTML = list.map(p => `<button class="gem-card" type="button" data-hi="${p.id}"><span class="pc-img"${p.img ? ` data-src="${esc(YS.wsize(p.img, 330))}"` : ""}><b>${esc(p.n[0])}</b></span><b>${esc(p.n)}</b><span class="meta">${esc((YS.stateOf && YS.stateOf(p) !== "India" && YS.stateOf(p)) || (p.d.match(/ in ([^,]+)/) || [])[1] || p.c)} · ${esc(p.best)}</span></button>`).join("");
+$("#hIndia").querySelectorAll("[data-src]").forEach(n => { const im2 = new Image(); im2.onload = () => { n.style.backgroundImage = `url("${n.dataset.src}")`; n.classList.add("has") }; im2.src = n.dataset.src });
+$("#hIndia").onclick = e => { const b = e.target.closest("[data-hi]"); if(b && homeIndia[b.dataset.hi]) YS.openLive(homeIndia[b.dataset.hi]) };
+}).catch(() => { $("#hIndia").innerHTML = `<div class="empty">Connect to the internet to see places across India.</div>` });
+}
 })();
