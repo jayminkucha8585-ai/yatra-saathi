@@ -1,6 +1,6 @@
 // Service worker: opens the app instantly from the phone's storage, then quietly updates in the background.
-const CACHE = "yatra-v8";
-const SHELL = ["./", "index.html", "style.css", "theme.css", "pro.css", "stays.css", "places.js", "places2.js", "app1.js", "app2.js", "app3.js", "app4.js", "photos.js", "t-sos.js", "t-weather.js", "t-translate.js", "t-guide.js", "t-group.js", "t-lang.js", "t-scripts.js", "t-creator.js", "c-core.js", "auth.js", "me.js", "c-connect.js", "c-posts.js", "c-groupreq.js", "c-licence.js", "stays.js", "stay-detail.js", "nav.js", "home.js", "manifest.webmanifest", "icon.svg",
+const CACHE = "yatra-v9";
+const SHELL = ["./", "index.html", "style.css", "theme.css", "pro.css", "stays.css", "places.js", "places2.js", "app1.js", "app2.js", "app3.js", "app4.js", "photos.js", "t-sos.js", "t-weather.js", "t-translate.js", "t-guide.js", "t-group.js", "t-lang.js", "t-scripts.js", "t-creator.js", "c-core.js", "auth.js", "me.js", "c-connect.js", "c-posts.js", "c-groupreq.js", "c-licence.js", "stays.js", "stay-detail.js", "nav.js", "home.js", "india.css", "india-data.js", "india.js", "photospots.js", "india2.js", "manifest.webmanifest", "icon.svg",
 "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css", "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"];
 // libraries with fixed versions (Leaflet, Firebase, fonts) never change, so keep them
 const LIB = h => h === "unpkg.com" || h === "www.gstatic.com" || h === "fonts.googleapis.com" || h === "fonts.gstatic.com";
@@ -22,7 +22,7 @@ const req = e.request; if(req.method !== "GET") return;
 const url = new URL(req.url), h = url.host;
 // map tiles and place photos: keep on the phone once seen
 if(h.endsWith("tile.openstreetmap.org")){ e.respondWith(fromCache("yatra-tiles", req, 3000)); return }
-if(h === "upload.wikimedia.org"){ e.respondWith(fromCache("yatra-img", req, 200)); return }
+if(h === "upload.wikimedia.org" || h === "thumb.wikimedia.org"){ e.respondWith(fromCache("yatra-img", req, 400)); return }
 if(LIB(h)){ e.respondWith(fromCache(CACHE, req)); return }
 // live data (routes, hotels, weather, database) always from the network
 if(url.origin !== location.origin) return;
