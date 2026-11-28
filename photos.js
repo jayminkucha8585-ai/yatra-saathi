@@ -17,11 +17,17 @@ return wait[id] = wait[id] || fetch(`https://en.wikipedia.org/api/rest_v1/page/s
 .then(j => { const u = j && j.thumbnail && j.thumbnail.source; cache[id] = ok(u) ? u : null; store.set("photos2", cache); return cache[id] })
 .catch(() => null);
 };
-const big = u => u.replace(/\/(\d+)px-/, "/640px-");
-// fill every element that has data-photo="placeId"
+// Wikimedia only serves these photo widths; any other width is refused, so snap to one of them
+const SIZES = [120, 250, 330, 500, 960, 1280];
+YS.wsize = (u, want) => typeof u === "string" ? u.replace(/\/(\d+)px-/, () => `/${SIZES.find(s => s >= want) || 1280}px-`) : u;
+// fill every element that has data-photo="placeId"; show the photo only once it has really loaded
 YS.paintPhotos = root => (root || document).querySelectorAll("[data-photo]").forEach(async n => {
-const u = await YS.photo(n.dataset.photo);
-if(u){ n.style.backgroundImage = `url("${big(u)}")`; n.classList.add("has") }
+const u = await YS.photo(n.dataset.photo); if(!u) return;
+const show = src => { n.style.backgroundImage = `url("${src}")`; n.classList.add("has") };
+const want = YS.wsize(u, n.offsetWidth > 200 ? 960 : 330), img = new Image();
+img.onload = () => show(want);
+img.onerror = () => { if(want !== u){ const b = new Image(); b.onload = () => show(u); b.src = u } };
+img.src = want;
 });
 const tags = p => `${p.rem ? `<span class="tag gem">Hidden gem</span>` : ""}<span class="tag">${esc(p.c)}</span>`;
 
