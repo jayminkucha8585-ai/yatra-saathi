@@ -8,7 +8,8 @@ css.textContent = `.ysd-wrap{position:relative;display:block;min-width:0}
 .ysd-wrap>input[type=date]{color:transparent!important;-webkit-text-fill-color:transparent!important}
 .ysd-wrap>input[type=date]::-webkit-datetime-edit{opacity:0}
 .ysd-txt{position:absolute;display:flex;align-items:center;pointer-events:none;color:var(--ink);font:inherit;white-space:nowrap}
-.ysd-txt.empty{color:var(--mute)}`;
+.ysd-txt.empty{color:var(--mute)}
+#hMode{display:none!important}#modeList .card.pick{outline:none!important}`; // transport is chosen once, on the Trips screen
 document.head.appendChild(css);
 
 const draw = inp => { const t = inp._ysd; if(!t) return; const v = dmy(inp.value), cs = getComputedStyle(inp);
