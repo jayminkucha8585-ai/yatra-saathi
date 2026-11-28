@@ -1,4 +1,6 @@
 // ---------- Profile tab ----------
+// the app translates itself: Chrome's own "Translate page?" bar stays off (translate="no" + meta), but the class must go or nothing gets translated
+document.documentElement.classList.remove("notranslate");
 (() => {
 const {$, esc, store, toast} = YS;
 const A = (typeof firebase !== "undefined" && firebase.apps && firebase.apps.length) ? firebase.auth() : null;
