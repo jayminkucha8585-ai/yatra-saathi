@@ -7,13 +7,15 @@ const STATES = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisga
 const seen = {};
 let lastQ = "", more = 0;
 const card = p => `<div class="pc place" data-live="${p.id}" tabindex="0" role="button" aria-label="${esc(p.n)}">
-<div class="pc-img${p.img ? " has" : ""}"${p.img ? ` style="background-image:url('${esc(p.img)}')"` : ""}><b>${esc(p.n[0])}</b></div>
+<div class="pc-img"${p.img ? ` data-src="${esc(YS.wsize(p.img, 330))}"` : ""}><b>${esc(p.n[0])}</b></div>
 <div class="pc-txt"><h3>${esc(p.n)}</h3><div class="meta">${YS.dist(p)} km away · ${esc(p.d || p.c)}</div><div><span class="tag">${esc(p.c)}</span></div></div></div>`;
 const show = (list, add) => {
 list.forEach(p => seen[p.id] = p);
 const box = $("#iList");
 box.innerHTML = (add ? box.innerHTML : "") + (list.length ? list.map(card).join("") : add ? "" : `<div class="empty">No places found. Try another name.</div>`);
 $("#iMore").hidden = !more;
+// show each photo only after it has loaded
+box.querySelectorAll("[data-src]").forEach(n => { const im = new Image(); im.onload = () => { n.style.backgroundImage = `url("${n.dataset.src}")`; n.classList.add("has") }; im.src = n.dataset.src; n.removeAttribute("data-src") });
 };
 const busy = t => { $("#iList").innerHTML = `<div class="empty">${esc(t)}</div>`; $("#iMore").hidden = true };
 const search = async q => {
@@ -50,8 +52,9 @@ $("#iList").addEventListener("keydown", e => { if(e.key === "Enter") openCard(e)
 
 // ---------- live place sheet ----------
 YS.openLive = raw => {
-const p = YS.addPlace(raw); if(typeof selectPlace === "function") selectPlace(p.id);
-$("#sBody").innerHTML = `<div class="hero${p.img ? " has" : ""}"${p.img ? ` style="background-image:url('${esc(p.img.replace(/\/\d+px-/, "/800px-"))}')"` : ""}><b>${esc(p.n[0])}</b></div>
+const p = YS.addPlace(raw); if(!p.live && typeof openPlace === "function") return openPlace(p.id);
+if(typeof selectPlace === "function") selectPlace(p.id);
+$("#sBody").innerHTML = `<div class="hero" data-photo="${esc(p.id)}"><b>${esc(p.n[0])}</b></div>
 <h2 style="font-size:28px;margin:12px 0 4px">${esc(p.n)}</h2>
 <div><span class="tag">${esc(p.c)}</span><span class="tag">Usually best: ${esc(p.best)}</span><span class="tag">${YS.dist(p)} km away</span></div>
 <p>${esc(p.d)}</p><p id="lvTxt" class="meta">Loading details…</p>
@@ -64,7 +67,7 @@ $("#sBody").innerHTML = `<div class="hero${p.img ? " has" : ""}"${p.img ? ` styl
 <button class="sec" type="button" data-go="creator">Creator spots & script</button>
 <button class="sec" type="button" data-go="close">Close</button></div>
 <p class="note photo-credit">Text and photo: Wikipedia / Wikimedia Commons</p>`;
-$("#sheet").classList.add("on");
+$("#sheet").classList.add("on"); YS.paintPhotos($("#sBody"));
 $("#sBody").querySelector("[data-act=lvnav]").onclick = () => { $("#sheet").classList.remove("on"); YS.nav ? YS.nav(p.lat, p.lng, p.n) : toast("Directions not available") };
 YS.wikiText(p.wiki || p.n).then(t => { const el = $("#lvTxt"); if(el) el.textContent = t.length > 700 ? t.slice(0, 700) + "…" : t });
 };
