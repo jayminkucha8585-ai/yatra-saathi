@@ -1,7 +1,7 @@
 // ---------- All-India places: live from Wikipedia + OpenStreetMap search ----------
 (() => {
 const {$, esc, store, km} = YS;
-const W = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=coordinates|pageimages|description&piprop=thumbnail&pithumbsize=400&pilimit=50&colimit=50";
+const W = "https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=coordinates|pageimages|description&piprop=thumbnail&pithumbsize=500&pilimit=50&colimit=50";
 const NOT = /^(village|census town|town|city|municipality|metropolis|capital|railway station|metro station|bus station|airport|school|college|university|hospital|neighbourhood|suburb|area|locality|assembly constituency|lok sabha constituency|constituency|district|tehsil|taluka?|mandal|company|road|highway|street|festival|annual|state of|union territory|river|human settlement|ward|panchayat)/i;
 const KIND = [[/temple|mandir|shrine|gurudwara|church|mosque|masjid|dargah|monastery|gompa|basilica|cathedral|jyotirlinga|ashram|math\b/i,"Temple","pilgrimage"],
 [/fort|palace|qila|mahal|tomb|monument|stepwell|vav\b|ruins|caves?\b|heritage|museum|haveli|archaeolog|memorial|minar|gate/i,"Heritage","heritage"],
@@ -51,6 +51,10 @@ YS.photo = id => { const p = PLACES.find(x => x.id === id); return p && p.img &&
 let saved = store.get("livePlaces", []);
 const pin = () => L.divIcon({className:"", html:`<div class="pin live"></div>`, iconSize:[28,28], iconAnchor:[14,28]});
 YS.addPlace = (p, keep = true) => {
+if(p.img) p.img = YS.wsize ? YS.wsize(p.img, 330) : p.img;
+// same place already in the list (e.g. Statue of Unity): use that one, don't add a copy
+const same = PLACES.find(x => x.id !== p.id && x.n.toLowerCase() === p.n.toLowerCase() && km(x, p) < 5);
+if(same){ if(keep === false){ saved = saved.filter(x => x.id !== p.id); store.set("livePlaces", saved) } return same }
 if(!PLACES.some(x => x.id === p.id)){
 PLACES.push(p);
 ["#stayAt","#routeTo","#hTo","#crAt"].forEach(s => { const el = $(s); if(el && !el.querySelector(`option[value="${p.id}"]`)) el.insertAdjacentHTML("beforeend", `<option value="${p.id}">${esc(p.n)}</option>`) });
