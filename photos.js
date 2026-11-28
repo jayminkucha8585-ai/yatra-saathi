@@ -7,15 +7,25 @@ sap:"Saputara", pav:"Champaner-Pavagadh_Archaeological_Park", polo:"Polo_Forest"
 kalo:"Kalo_Dungar", kot:"Koteshwar,_Kutch", nars:"Narayan_Sarovar", madh:"Mata_no_Madh", lakh:"Lakhpat", dhol:"Dholavira",
 tul:"Tulsishyam", kank:"Kankai", navl:"Navlakha_temple", vela:"Blackbuck_National_Park,_Velavadar", zar:"Zarwani",
 don:"Don,_Dang", wil:"Wilson_Hills,_Gujarat", girn:"Girnar", gop:"Gopnath"};
-const cache = store.get("photos2", {}), wait = {};
+const cache = store.get("photos3", {}), wait = {};
 const ok = u => typeof u === "string" && /^https:\/\/(upload|thumb)\.wikimedia\.org\//.test(u);
+// free-to-use photos from Wikimedia Commons: search the place name near its location, then any photo taken right there
+const CM = "https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrnamespace=6&gsrlimit=3&prop=imageinfo&iiprop=url&iiurlwidth=330&gsrsearch=";
+const first = j => { const pg = Object.values((j.query && j.query.pages) || {}).sort((a,b) => a.index - b.index)[0]; return pg && pg.imageinfo && pg.imageinfo[0].thumburl };
+const commons = async p => {
+if(!p || p.lat == null) return null;
+const name = p.n.replace(/\b(hill station|temple|beach|waterfall|mata|national park)\b/ig, "").trim() || p.n;
+for(const q of [`${name} filetype:bitmap nearcoord:25km,${p.lat},${p.lng}`, `${p.n} ${p.live ? "India" : "Gujarat"} filetype:bitmap`, `filetype:bitmap nearcoord:3km,${p.lat},${p.lng}`]){
+try{ const u = first(await (await fetch(CM + encodeURIComponent(q))).json()); if(ok(u)) return u }catch(e){}
+}
+return null;
+};
+const wiki = id => !WIKI[id] ? Promise.resolve(null) : fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(WIKI[id])}`)
+.then(r => r.ok ? r.json() : null).then(j => { const u = j && j.thumbnail && j.thumbnail.source; return ok(u) ? u : null }).catch(() => null);
 YS.photo = id => {
 if(id in cache) return Promise.resolve(cache[id]);
-if(!WIKI[id]) return Promise.resolve(null);
-return wait[id] = wait[id] || fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(WIKI[id])}`)
-.then(r => r.ok ? r.json() : null)
-.then(j => { const u = j && j.thumbnail && j.thumbnail.source; cache[id] = ok(u) ? u : null; store.set("photos2", cache); return cache[id] })
-.catch(() => null);
+return wait[id] = wait[id] || wiki(id).then(u => u || commons(PLACES.find(x => x.id === id)))
+.then(u => { if(u){ cache[id] = u; store.set("photos3", cache) } return u || null });
 };
 // Wikimedia only serves these photo widths; any other width is refused, so snap to one of them
 const SIZES = [120, 250, 330, 500, 960, 1280];
