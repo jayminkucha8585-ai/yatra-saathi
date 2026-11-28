@@ -1,0 +1,63 @@
+/* Glass look: frosted cards over a soft desert-sunset background + My Trip screens */
+body{background:radial-gradient(60% 40% at 0% 20%,#f3b88a55,transparent 70%),radial-gradient(50% 35% at 100% 45%,#8fc7bd55,transparent 70%),radial-gradient(55% 40% at 20% 95%,#c9b6f055,transparent 70%),var(--bg);background-attachment:fixed}
+.card,.glass,#v-home .tiles,.pc,.gem-card,nav,.sheet>div{background:rgba(255,255,255,.55)!important;-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(255,255,255,.7);box-shadow:0 8px 28px #2b1d1414,inset 0 1px 0 #ffffffb0}
+nav{border-width:1px 0 0}
+@media(prefers-color-scheme:dark){
+body{background:radial-gradient(60% 40% at 0% 20%,#a8481f44,transparent 70%),radial-gradient(50% 35% at 100% 45%,#1e6b6344,transparent 70%),radial-gradient(55% 40% at 20% 95%,#4a5a9e44,transparent 70%),var(--bg)}
+.card,.glass,#v-home .tiles,.pc,.gem-card,nav,.sheet>div{background:rgba(42,31,24,.55)!important;border-color:rgba(255,255,255,.1);box-shadow:0 8px 28px #0006,inset 0 1px 0 #ffffff14}}
+.glass{border-radius:20px;padding:14px 16px;color:var(--ink)}
+/* Home trip card */
+.trip-home{display:flex;align-items:center;gap:12px;width:100%;margin:14px 0 4px;text-align:left;border-radius:22px!important;padding:16px 18px;background:linear-gradient(120deg,rgba(168,72,31,.85),rgba(217,138,78,.75))!important;color:#fff}
+.trip-home div{flex:1;display:flex;flex-direction:column;gap:2px}.trip-home small{font-size:11px;letter-spacing:.08em;opacity:.85}
+.trip-home b{font:800 24px "Baloo Bhai 2",sans-serif}.trip-home span{font-size:13px;opacity:.9}
+.trip-home .go{font-style:normal;font-size:22px;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#ffffff33}
+/* wizard */
+.wz-top{display:flex;align-items:center;gap:10px;margin:6px 0 10px}.wz-track{flex:1;height:6px;border-radius:9px;background:var(--line);overflow:hidden}
+.wz-track i{display:block;height:100%;background:linear-gradient(90deg,var(--sea),var(--red));border-radius:9px;transition:width .35s}
+#wzStep{font-size:12px;color:var(--mute)}.wz-q{font:800 28px/1.15 "Baloo Bhai 2",sans-serif;margin:8px 0 2px}.wz-h{font-size:15px;margin:16px 0 8px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}.pill{background:rgba(255,255,255,.6);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:9px 14px;font-size:14px;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);min-height:0}
+.pill.on{background:var(--sea);color:#fff;border-color:var(--sea)}
+.pill.c-top.on,.pill.c-gems.on,.pill.c-photo.on{background:#c9b6f0;color:#2b1d14;border-color:#a891e0}
+.pill.c-temple.on,.pill.c-fort.on,.pill.c-museum.on,.pill.c-heritage.on{background:#f3c9a0;color:#2b1d14;border-color:var(--dune)}
+.dots{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--mute);margin:8px 0}.dots i{width:9px;height:9px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--dune)}.dots span{margin-left:6px}
+.picked{margin-top:10px}.review{display:grid;gap:10px}.review small,.trip-head small,.leg small,.wx small{display:block;font-size:11px;color:var(--mute);letter-spacing:.04em}
+.wz-nav{position:sticky;bottom:calc(76px + env(safe-area-inset-bottom));display:flex;gap:10px;margin-top:18px}.wz-nav .pri{flex:1}
+/* dashboard */
+.trip-head{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;margin:4px 0 12px}.trip-head h2{font:800 28px "Baloo Bhai 2",sans-serif;margin:0}
+.wgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.wg{border-radius:22px;padding:14px;-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(255,255,255,.6);box-shadow:0 8px 24px #2b1d1412;min-width:0}
+.wg.wide{grid-column:1/-1}.wg h3{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center;gap:6px}
+.w-white{background:rgba(255,255,255,.6)}.w-yellow{background:linear-gradient(150deg,rgba(243,201,120,.8),rgba(217,138,78,.55))}
+.w-lilac{background:linear-gradient(150deg,rgba(185,196,255,.75),rgba(201,182,240,.55))}.w-plum{background:linear-gradient(150deg,rgba(46,58,107,.9),rgba(30,107,99,.8));color:#fff}
+.w-dark{background:rgba(43,29,20,.86);color:#f6eadb}.w-sand{background:rgba(244,226,201,.7)}
+.w-plum small,.w-dark .meta{color:#ffffffaa}
+.pill-sm{display:inline-block;font-size:10px;background:rgba(255,255,255,.7);border-radius:99px;padding:3px 8px;color:var(--mute)}
+.donut{--p:0;width:110px;height:110px;margin:10px auto 6px;border-radius:50%;background:conic-gradient(var(--dune) calc(var(--p)*1%),var(--sea) 0);display:grid;place-items:center}
+.donut span,.ring span{width:66%;height:66%;border-radius:50%;background:rgba(255,255,255,.85);display:grid;place-content:center;text-align:center;font:800 20px "Baloo Bhai 2",sans-serif;color:var(--ink)}
+.donut small,.ring small{font:500 10px system-ui;color:var(--mute)}.legend{font-size:11px;color:var(--mute);text-align:center}.legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin:0 3px 0 6px}.legend .a{background:var(--dune)}.legend .b{background:var(--sea)}
+.ring{--p:0;width:120px;height:120px;margin:4px auto;border-radius:50%;background:conic-gradient(var(--sea) calc(var(--p)*1%),rgba(255,255,255,.45) 0);display:grid;place-items:center}
+.ring span{font-size:40px;line-height:1;background:rgba(255,236,200,.9)}.c{text-align:center}
+.ex{display:flex;justify-content:space-between;gap:6px;font-size:14px;padding:5px 0;border-bottom:1px solid rgba(43,29,20,.08)}.ex span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+button.add,button.mini{background:none;color:inherit;padding:6px 0;font-weight:700;min-height:0}button.mini{font-size:12px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.6);color:var(--ink)}
+.wx{display:flex;justify-content:space-between;align-items:center;font-size:13px}.wx small{margin-top:6px}.wx>b{font:800 36px "Baloo Bhai 2",sans-serif}
+.leg{margin:8px 0}.leg b{font-size:15px}.leg i{font-style:normal;opacity:.7;margin:0 4px}
+.pk{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #ffffff1c;font-size:14px;margin:0}.pk input{width:18px;height:18px;accent-color:var(--dune)}.pk span{flex:1}.pk.done span{text-decoration:line-through;opacity:.55}.pk b{opacity:.5;font-size:12px;cursor:pointer}
+.w-dark input:not([type]){background:#ffffff18;color:#fff;border-color:#ffffff30}.w-dark .add{color:var(--dune);font-size:22px}
+.dayrow{display:flex;gap:10px;align-items:center;width:100%;background:none;color:var(--ink);text-align:left;padding:10px 0;border-bottom:1px solid rgba(43,29,20,.1);border-radius:0;min-height:0}
+.dayrow small{display:block;font-size:12px;color:var(--mute)}.dchip{background:rgba(255,255,255,.75);border-radius:99px;padding:4px 10px;font-size:12px;font-weight:700;white-space:nowrap}
+.danger{margin:16px 0;width:100%;color:var(--red)}.empty-trip{text-align:center;padding:28px 18px;margin-top:10px}.empty-trip .big{font-size:52px}
+/* timeline */
+.dtabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--line);margin-bottom:14px}.dtabs button{background:none;color:var(--mute);font:600 22px "Baloo Bhai 2",sans-serif;display:flex;flex-direction:column;align-items:center;padding:4px 14px 8px;border-radius:0;border-bottom:3px solid transparent;min-height:0}
+.dtabs small{font:600 10px system-ui;letter-spacing:.1em}.dtabs .on{color:var(--ink);border-color:var(--sea)}
+.over{font-size:11px;letter-spacing:.14em;color:var(--mute)}.dtitle{font:800 28px/1.15 "Baloo Bhai 2",sans-serif;margin:2px 0 16px}
+.tline{position:relative;padding-left:22px}.tline::before{content:"";position:absolute;left:6px;top:8px;bottom:8px;border-left:2px dotted var(--line)}
+.ttime{font:700 13px ui-monospace,monospace;display:flex;align-items:center;gap:8px;margin-left:-22px;color:var(--mute)}
+.ttime i{width:12px;height:12px;border-radius:50%;border:2px solid var(--indigo);background:var(--bg)}.now .ttime i{background:var(--sea);border-color:var(--sea);box-shadow:0 0 0 4px #1e6b6333}
+.tcard{display:flex;width:100%;padding:0!important;overflow:hidden;text-align:left;margin:8px 0;border-left:4px solid var(--sea)!important;min-height:96px}
+.tcard>span:first-child{flex:1;padding:12px 14px;display:flex;flex-direction:column;gap:4px}.tcard b{font-size:17px}.tcard small{font-size:13px;color:var(--mute);line-height:1.35}
+.tph{width:110px!important;height:auto!important;border-radius:0!important;flex:none}
+.tleg{display:flex;justify-content:space-between;align-items:center;font:12px ui-monospace,monospace;color:var(--mute);margin:0 0 16px}
+.wgrid button{justify-content:flex-start}.wg .add{display:flex;align-items:center;gap:6px}
+.legend{display:flex;flex-direction:column;align-items:center;gap:2px}.w-plum,.w-dark{grid-column:1/-1}
+.w-dark .pk,.w-dark .pk span{color:#f6eadb;opacity:1;font-weight:500}.w-dark .pk.done span{opacity:.5}
+.tcard .tph{align-self:stretch;width:110px!important;min-height:96px;height:auto!important;border-radius:0!important;background-size:cover}
+.dayrow span:last-child{display:flex;flex-direction:column;align-items:flex-start}
