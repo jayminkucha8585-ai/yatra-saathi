@@ -50,7 +50,18 @@ function creator(cm){
 const shots = L.layerGroup().addTo(cm), views = L.layerGroup().addTo(cm), done = new Set();
 const wrap = $("#crMap").closest(".crmap-wrap") || $("#crMap");
 wrap.insertAdjacentHTML("beforebegin", `<form class="row" id="crSearch"><input id="crQ" type="search" placeholder="Find shoot spots anywhere in India" style="flex:1" aria-label="Search shoot spots"><button class="pri" type="submit">Go</button></form>`);
-$("#crSearch").onsubmit = e => { e.preventDefault(); jump($("#crQ").value, cm) };
+// search any place in India: move the map there AND make it the place for shoot spots and scripts
+const pick = async q => {
+q = q.trim(); if(!q || !$("#crAt")) return;
+try{
+let p = (await YS.wikiSearch(q)).list[0];
+if(!p){ const g = await YS.geocode(q); if(g) p = (await YS.wikiNear(g.lat, g.lng, 10000))[0] }
+if(!p) return;
+p = YS.addPlace(p); $("#crAt").value = p.id; $("#crAt").dispatchEvent(new Event("change"));
+toast("Shoot spots and script for " + p.n);
+}catch(e){}
+};
+$("#crSearch").onsubmit = e => { e.preventDefault(); jump($("#crQ").value, cm); pick($("#crQ").value) };
 const lg = $("#v-creator .legend");
 if(lg) lg.insertAdjacentHTML("beforeend", `<span><i class="shotpin sm"></i>Best photo spot (real photo shot here)</span><span><i class="viewpin sm">👁</i>Viewpoint for photo & video</span>`);
 let tt;
@@ -178,7 +189,16 @@ if(m) m.insertAdjacentHTML("afterbegin", `<button type="button" class="hlang-row
 (() => {
 const {$, toast} = YS, LANG = YS.APP_LANGS, lang = YS.appLang();
 // ---------- scripts in every language ----------
-const OWN = ["en","hi","gu","hinglish"], sc = YS.script;
+const OWN = ["en","hi","gu","hinglish"], sc0 = YS.script;
+// scripts name the right state: "#Kerala #KeralaTourism · 📍 Place, Kerala" instead of always Gujarat
+const STATES = ["Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal Pradesh","Jharkhand","Karnataka","Kerala","Madhya Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal","Andaman and Nicobar","Chandigarh","Dadra and Nagar Haveli","Daman and Diu","Delhi","Jammu and Kashmir","Ladakh","Lakshadweep","Puducherry"];
+YS.stateOf = p => !p.live ? "Gujarat" : (STATES.find(s => `${p.d} ${p.wiki || ""} ${p.n}`.includes(s)) || "India");
+const sc = (p, f, l) => {
+const out = sc0(p, f, l), st = YS.stateOf(p), tag = st.replace(/[^A-Za-z]/g, "");
+if(st === "Gujarat") return out;
+return out.replace(/#GujaratTourism/g, st === "India" ? "#IncredibleIndia" : `#${tag}Tourism`).replace(/#Gujarat\b/g, `#${tag}`).replace(/, Gujarat/g, `, ${st}`);
+};
+YS.script = sc;
 if(YS.LANGS){
 LANG.filter(l => !OWN.includes(l[0])).forEach(l => YS.LANGS.push([l[0], `${l[1]} (${l[2]})`]));
 YS.script = (p, f, l) => {
