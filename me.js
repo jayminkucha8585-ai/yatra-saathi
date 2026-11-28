@@ -47,5 +47,5 @@ async function delAccount(u){
   }
 }
 })();
-// load the new profile page and theme switch once the page is ready
-addEventListener("DOMContentLoaded", () => { const s = document.createElement("script"); s.src = "profile.js"; document.body.appendChild(s) });
+// load the new profile page, theme switch and dd/mm/yyyy dates once the page is ready
+addEventListener("DOMContentLoaded", () => ["profile.js", "dates.js"].forEach(f => { const s = document.createElement("script"); s.src = f; document.body.appendChild(s) }));
