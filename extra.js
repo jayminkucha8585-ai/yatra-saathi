@@ -99,3 +99,28 @@ const op = window.openPlace; window.openPlace = id => { stopTalk(); op(id); addC
 const ol = YS.openLive; YS.openLive = raw => { stopTalk(); ol(raw); addCards() };
 document.addEventListener("click", e => { if(e.target.closest('[data-go="close"]')) stopTalk() });
 })();
+
+// ---------- Water ripple on touch (replaces the phone's blue tap box) ----------
+(() => {
+const css = document.createElement("style");
+css.textContent = `*{-webkit-tap-highlight-color:transparent!important}
+:focus:not(:focus-visible){outline:none!important}
+button,[data-open],[data-v],.card,.pc{transition:transform .18s ease}
+button:active,[data-open]:active,[data-v]:active{transform:scale(.96)}
+.wbox{position:fixed;overflow:hidden;pointer-events:none;z-index:9999}
+.wdrop{position:absolute;border-radius:50%;transform:translate(-50%,-50%) scale(0);opacity:.9;pointer-events:none;
+background:radial-gradient(circle,rgba(255,255,255,.7) 0,rgba(127,179,175,.38) 38%,rgba(15,94,99,.22) 58%,rgba(15,94,99,0) 72%);animation:wdrop .65s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes wdrop{to{transform:translate(-50%,-50%) scale(1);opacity:0}}`;
+document.head.appendChild(css);
+document.addEventListener("pointerdown", e => {
+const t = e.target.closest("button,a,[data-open],[data-v],.card,.pc,.pill,select");
+if(!t || t.disabled) return;
+const r = t.getBoundingClientRect(); if(!r.width || !r.height) return;
+const box = document.createElement("div"); box.className = "wbox";
+box.style.cssText = `left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px;border-radius:${getComputedStyle(t).borderRadius}`;
+const d = document.createElement("i"), s = Math.max(r.width, r.height) * 2.4;
+d.className = "wdrop"; d.style.cssText = `left:${e.clientX - r.left}px;top:${e.clientY - r.top}px;width:${s}px;height:${s}px`;
+box.appendChild(d); document.body.appendChild(box);
+setTimeout(() => box.remove(), 700);
+}, {passive: true});
+})();
